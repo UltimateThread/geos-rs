@@ -1,0 +1,4 @@
+pub const DEFAULT_COORDINATE_X: f64 = 0.0;
+pub const DEFAULT_COORDINATE_Y: f64 = 0.0;
+pub const DEFAULT_COORDINATE_Z: f64 = 0.0;
+pub const DEFAULT_COORDINATE_M: f64 = 0.0;
