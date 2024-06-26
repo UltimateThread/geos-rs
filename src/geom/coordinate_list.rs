@@ -95,6 +95,7 @@ impl CoordinateList {
             }
         } else {
             let mut i = coord_list.len();
+            #[allow(unused_comparisons)]
             while i >= 0 {
                 self.add_coordinate_repeated(coord_list[i], allow_repeated);
                 i -= 1;

@@ -176,6 +176,10 @@ impl CoordinateArraySequence {
         return Coordinates::create_dim_measures(dimension, measures);
     }
 
+    pub fn create_coordinate_default(&self) -> Coordinate {
+        return Coordinates::create_dim_measures(self.get_dimension(), self.get_measures());
+    }
+
     /**
      * @see org.locationtech.jts.geom.CoordinateSequence#getDimension()
      */

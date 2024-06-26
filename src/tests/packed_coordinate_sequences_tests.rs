@@ -1,6 +1,14 @@
 #[cfg(test)]
 mod packed_coordinate_sequences_tests {
-    use crate::geom::{coordinate::Coordinate, implementation::{packed_coordinate_sequence_double::PackedCoordinateSequenceDouble, packed_coordinate_sequence_factory::PackedCoordinateSequenceFactory}, packed_coordinate_sequences::PackedCoordinateSequences, precision_model::PrecisionModel};
+    use crate::geom::{
+        coordinate::Coordinate,
+        implementation::{
+            packed_coordinate_sequence_double::PackedCoordinateSequenceDouble,
+            packed_coordinate_sequence_factory::PackedCoordinateSequenceFactory,
+        },
+        packed_coordinate_sequences::PackedCoordinateSequences,
+        precision_model::PrecisionModel,
+    };
 
     const ORDINATE_VALUES: [[f64; 2]; 20] = [
         [75.76, 77.43],
@@ -24,6 +32,21 @@ mod packed_coordinate_sequences_tests {
         [80.07, 13.55],
         [55.54, 94.07],
     ];
+
+    #[test]
+    fn test_3d_coordinate_sequence() {
+        let coords: Vec<f64> = vec![0.0, 1.0, 2.0, 3.0, 4.0, 5.0];
+        let cs = PackedCoordinateSequenceFactory::create_double_coordinates_dimension(&coords, 3);
+        assert_eq!(2.0, cs.get_coordinate_by_index(0).get_z());
+    }
+
+    #[test]
+    fn test_4d_coordinate_sequence() {
+        let coords: Vec<f64> = vec![0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0];
+        let cs = PackedCoordinateSequenceFactory::create_double_coordinates_dimension(&coords, 4);
+        assert_eq!(2.0, cs.get_coordinate_by_index(0).get_z());
+        assert_eq!(3.0, cs.get_coordinate_by_index(0).get_m());
+    }
 
     #[test]
     fn test_copy_to_larger_dim() {

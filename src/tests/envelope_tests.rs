@@ -125,8 +125,8 @@ mod envelope_tests {
         assert_eq!(0., Envelope::default().get_height());
         assert_eq!(0., Envelope::default().get_width());
         assert_envelope_equals(&Envelope::default(), &Envelope::default());
-        let e = Envelope::new_xy(100., 101., 100., 101.);
-        e.intersection_envelope(&Envelope::default());
+        let mut e = Envelope::new_xy(100., 101., 100., 101.);
+        e.init(&Envelope::default());
         assert_envelope_equals(&Envelope::default(), &e);
     }
 

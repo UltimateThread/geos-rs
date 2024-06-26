@@ -668,6 +668,7 @@ impl CoordinateArrays {
         end = MathUtil::clamp_i32(end as i32, -1, pts.len() as i32) as usize;
 
         let mut npts = end - start + 1;
+        #[allow(unused_comparisons)]
         if end < 0 {
             npts = 0;
         }

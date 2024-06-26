@@ -1,4 +1,4 @@
-use super::{envelope::Envelope, geometry_factory::GeometryFactory, precision_model::PrecisionModel};
+use super::{envelope::Envelope, geometry_factory::GeometryFactory};
 
 
 /**
@@ -161,348 +161,348 @@ impl Geometry {
     //    */
     //   private Object userData = null;
 
-    /**
-     * Creates a new <code>Geometry</code> via the specified GeometryFactory.
-     *
-     * @param factory
-     */
-    pub fn new_with_factory(factory: GeometryFactory) -> Self {
-        Self {
-            factory: factory,
-            srid: factory.get_srid(),
-        }
-    }
+    // /**
+    //  * Creates a new <code>Geometry</code> via the specified GeometryFactory.
+    //  *
+    //  * @param factory
+    //  */
+    // pub fn new_with_factory(factory: GeometryFactory) -> Self {
+    //     Self {
+    //         factory: factory,
+    //         srid: factory.get_srid(),
+    //     }
+    // }
 
-    //   /**
-    //    * Returns the name of this Geometry's actual class.
-    //    *
-    //    *@return the name of this <code>Geometry</code>s actual class
-    //    */
-    //   public abstract String getGeometryType();
+    // //   /**
+    // //    * Returns the name of this Geometry's actual class.
+    // //    *
+    // //    *@return the name of this <code>Geometry</code>s actual class
+    // //    */
+    // //   public abstract String getGeometryType();
 
-    /**
-     * Returns true if the array contains any non-empty <code>Geometry</code>s.
-     *
-     *@param  geometries  an array of <code>Geometry</code>s; no elements may be
-     *      <code>null</code>
-     *@return             <code>true</code> if any of the <code>Geometry</code>s
-     *      <code>isEmpty</code> methods return <code>false</code>
-     */
-    pub fn hasNonEmptyElements(geometries: Vec<Geometry>) -> bool {
-        for i in 0..geometries.len() {
-            if !geometries[i].isEmpty() {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //   /**
-    //    *  Returns true if the array contains any <code>null</code> elements.
-    //    *
-    //    *@param  array  an array to validate
-    //    *@return        <code>true</code> if any of <code>array</code>s elements are
-    //    *      <code>null</code>
-    //    */
-    //   pub fn hasNullElements(Object[] array) -> bool {
-    //     for (int i = 0; i < array.length; i++) {
-    //       if (array[i] == null) {
-    //         return true;
-    //       }
+    // /**
+    //  * Returns true if the array contains any non-empty <code>Geometry</code>s.
+    //  *
+    //  *@param  geometries  an array of <code>Geometry</code>s; no elements may be
+    //  *      <code>null</code>
+    //  *@return             <code>true</code> if any of the <code>Geometry</code>s
+    //  *      <code>isEmpty</code> methods return <code>false</code>
+    //  */
+    // pub fn hasNonEmptyElements(geometries: Vec<Geometry>) -> bool {
+    //     for i in 0..geometries.len() {
+    //         if !geometries[i].isEmpty() {
+    //             return true;
+    //         }
     //     }
     //     return false;
-    //   }
+    // }
 
-    /**
-     *  Returns the ID of the Spatial Reference System used by the <code>Geometry</code>.
-     *  <P>
-     *
-     *  JTS supports Spatial Reference System information in the simple way
-     *  defined in the SFS. A Spatial Reference System ID (SRID) is present in
-     *  each <code>Geometry</code> object. <code>Geometry</code> provides basic
-     *  accessor operations for this field, but no others. The SRID is represented
-     *  as an integer.
-     *
-     *@return    the ID of the coordinate space in which the <code>Geometry</code>
-     *      is defined.
-     *
-     */
-    pub fn getSRID(self) -> i32 {
-        self.srid
-    }
+    // //   /**
+    // //    *  Returns true if the array contains any <code>null</code> elements.
+    // //    *
+    // //    *@param  array  an array to validate
+    // //    *@return        <code>true</code> if any of <code>array</code>s elements are
+    // //    *      <code>null</code>
+    // //    */
+    // //   pub fn hasNullElements(Object[] array) -> bool {
+    // //     for (int i = 0; i < array.length; i++) {
+    // //       if (array[i] == null) {
+    // //         return true;
+    // //       }
+    // //     }
+    // //     return false;
+    // //   }
 
-    /**
-     *  Sets the ID of the Spatial Reference System used by the <code>Geometry</code>.
-     *  <p>
-     *  <b>NOTE:</b> This method should only be used for exceptional circumstances or
-     *  for backwards compatibility.  Normally the SRID should be set on the
-     *  {@link GeometryFactory} used to create the geometry.
-     *  SRIDs set using this method will <i>not</i> be propagated to
-     *  geometries returned by constructive methods.
-     *
-     *  @see GeometryFactory
-     */
-    pub fn setSRID(&mut self, srid: i32) {
-        self.srid = srid;
-    }
+    // /**
+    //  *  Returns the ID of the Spatial Reference System used by the <code>Geometry</code>.
+    //  *  <P>
+    //  *
+    //  *  JTS supports Spatial Reference System information in the simple way
+    //  *  defined in the SFS. A Spatial Reference System ID (SRID) is present in
+    //  *  each <code>Geometry</code> object. <code>Geometry</code> provides basic
+    //  *  accessor operations for this field, but no others. The SRID is represented
+    //  *  as an integer.
+    //  *
+    //  *@return    the ID of the coordinate space in which the <code>Geometry</code>
+    //  *      is defined.
+    //  *
+    //  */
+    // pub fn getSRID(self) -> i32 {
+    //     self.srid
+    // }
 
-    /**
-     * Gets the factory which contains the context in which this geometry was created.
-     *
-     * @return the factory for this geometry
-     */
-    pub fn getFactory(self) -> GeometryFactory {
-        self.factory
-    }
+    // /**
+    //  *  Sets the ID of the Spatial Reference System used by the <code>Geometry</code>.
+    //  *  <p>
+    //  *  <b>NOTE:</b> This method should only be used for exceptional circumstances or
+    //  *  for backwards compatibility.  Normally the SRID should be set on the
+    //  *  {@link GeometryFactory} used to create the geometry.
+    //  *  SRIDs set using this method will <i>not</i> be propagated to
+    //  *  geometries returned by constructive methods.
+    //  *
+    //  *  @see GeometryFactory
+    //  */
+    // pub fn setSRID(&mut self, srid: i32) {
+    //     self.srid = srid;
+    // }
+
+    // /**
+    //  * Gets the factory which contains the context in which this geometry was created.
+    //  *
+    //  * @return the factory for this geometry
+    //  */
+    // pub fn getFactory(self) -> GeometryFactory {
+    //     self.factory
+    // }
+
+    // //   /**
+    // //    * Gets the user data object for this geometry, if any.
+    // //    *
+    // //    * @return the user data object, or <code>null</code> if none set
+    // //    */
+    // //   public Object getUserData() {
+    // //         return userData;
+    // //   }
+
+    // /**
+    //  * Returns the number of {@link Geometry}s in a {@link GeometryCollection}
+    //  * (or 1, if the geometry is not a collection).
+    //  *
+    //  * @return the number of geometries contained in this geometry
+    //  */
+    // pub fn getNumGeometries() -> usize {
+    //     return 1;
+    // }
+
+    // /**
+    //  * Returns an element {@link Geometry} from a {@link GeometryCollection}
+    //  * (or <code>this</code>, if the geometry is not a collection).
+    //  *
+    //  * @param n the index of the geometry element
+    //  * @return the n'th geometry contained in this geometry
+    //  */
+    // pub fn getGeometryN(self, n: i32) -> Geometry {
+    //     return self;
+    // }
+
+    // //   /**
+    // //    * A simple scheme for applications to add their own custom data to a Geometry.
+    // //    * An example use might be to add an object representing a Coordinate Reference System.
+    // //    * <p>
+    // //    * Note that user data objects are not present in geometries created by
+    // //    * construction methods.
+    // //    *
+    // //    * @param userData an object, the semantics for which are defined by the
+    // //    * application using this Geometry
+    // //    */
+    // //   public void setUserData(Object userData) {
+    // //         this.userData = userData;
+    // //   }
+
+    // /**
+    //  *  Returns the <code>PrecisionModel</code> used by the <code>Geometry</code>.
+    //  *
+    //  *@return    the specification of the grid of allowable points, for this
+    //  *      <code>Geometry</code> and all other <code>Geometry</code>s
+    //  */
+    // pub fn getPrecisionModel(self) -> PrecisionModel {
+    //     return self.factory.getPrecisionModel();
+    // }
+
+    // //   /**
+    // //    *  Returns a vertex of this geometry
+    // //    *  (usually, but not necessarily, the first one),
+    // //    *  or <code>null</code> if the geometry is empty.
+    // //    *  The returned coordinate should not be assumed
+    // //    *  to be an actual <code>Coordinate</code> object used in
+    // //    *  the internal representation.
+    // //    *
+    // //    *@return a coordinate which is a vertex of this <code>Geometry</code>.
+    // //    *@return null if this Geometry is empty
+    // //    */
+    // //   public abstract Coordinate getCoordinate();
+
+    // //   /**
+    // //    *  Returns an array containing the values of all the vertices for
+    // //    *  this geometry.
+    // //    *  If the geometry is a composite, the array will contain all the vertices
+    // //    *  for the components, in the order in which the components occur in the geometry.
+    // //    *  <p>
+    // //    *  In general, the array cannot be assumed to be the actual internal
+    // //    *  storage for the vertices.  Thus modifying the array
+    // //    *  may not modify the geometry itself.
+    // //    *  Use the {@link CoordinateSequence#setOrdinate} method
+    // //    *  (possibly on the components) to modify the underlying data.
+    // //    *  If the coordinates are modified,
+    // //    *  {@link #geometryChanged} must be called afterwards.
+    // //    *
+    // //    *@return    the vertices of this <code>Geometry</code>
+    // //    *@see #geometryChanged
+    // //    *@see CoordinateSequence#setOrdinate
+    // //    */
+    // //   public abstract Coordinate[] getCoordinates();
+
+    // //   /**
+    // //    *  Returns the count of this <code>Geometry</code>s vertices. The <code>Geometry</code>
+    // //    *  s contained by composite <code>Geometry</code>s must be
+    // //    *  Geometry's; that is, they must implement <code>getNumPoints</code>
+    // //    *
+    // //    *@return    the number of vertices in this <code>Geometry</code>
+    // //    */
+    // //   public abstract int getNumPoints();
 
     //   /**
-    //    * Gets the user data object for this geometry, if any.
-    //    *
-    //    * @return the user data object, or <code>null</code> if none set
-    //    */
-    //   public Object getUserData() {
-    //         return userData;
-    //   }
-
-    /**
-     * Returns the number of {@link Geometry}s in a {@link GeometryCollection}
-     * (or 1, if the geometry is not a collection).
-     *
-     * @return the number of geometries contained in this geometry
-     */
-    pub fn getNumGeometries() -> usize {
-        return 1;
-    }
-
-    /**
-     * Returns an element {@link Geometry} from a {@link GeometryCollection}
-     * (or <code>this</code>, if the geometry is not a collection).
-     *
-     * @param n the index of the geometry element
-     * @return the n'th geometry contained in this geometry
-     */
-    pub fn getGeometryN(self, n: i32) -> Geometry {
-        return self;
-    }
-
-    //   /**
-    //    * A simple scheme for applications to add their own custom data to a Geometry.
-    //    * An example use might be to add an object representing a Coordinate Reference System.
+    //    * Tests whether this {@link Geometry} is simple.
+    //    * The SFS definition of simplicity
+    //    * follows the general rule that a Geometry is simple if it has no points of
+    //    * self-tangency, self-intersection or other anomalous points.
     //    * <p>
-    //    * Note that user data objects are not present in geometries created by
-    //    * construction methods.
+    //    * Simplicity is defined for each {@link Geometry} subclass as follows:
+    //    * <ul>
+    //    * <li>Valid polygonal geometries are simple, since their rings
+    //    * must not self-intersect.  <code>isSimple</code>
+    //    * tests for this condition and reports <code>false</code> if it is not met.
+    //    * (This is a looser test than checking for validity).
+    //    * <li>Linear rings have the same semantics.
+    //    * <li>Linear geometries are simple if they do not self-intersect at points
+    //    * other than boundary points.
+    //    * <li>Zero-dimensional geometries (points) are simple if they have no
+    //    * repeated points.
+    //    * <li>Empty <code>Geometry</code>s are always simple.
+    //    * </ul>
     //    *
-    //    * @param userData an object, the semantics for which are defined by the
-    //    * application using this Geometry
+    //    * @return <code>true</code> if this <code>Geometry</code> is simple
+    //    * @see #isValid
     //    */
-    //   public void setUserData(Object userData) {
-    //         this.userData = userData;
+    //   pub fn isSimple(self) -> bool {
+    //     IsSimpleOp op = new IsSimpleOp(this);
+    //     return op.isSimple();
     //   }
 
-    /**
-     *  Returns the <code>PrecisionModel</code> used by the <code>Geometry</code>.
-     *
-     *@return    the specification of the grid of allowable points, for this
-     *      <code>Geometry</code> and all other <code>Geometry</code>s
-     */
-    pub fn getPrecisionModel(self) -> PrecisionModel {
-        return self.factory.getPrecisionModel();
-    }
-
     //   /**
-    //    *  Returns a vertex of this geometry
-    //    *  (usually, but not necessarily, the first one),
-    //    *  or <code>null</code> if the geometry is empty.
-    //    *  The returned coordinate should not be assumed
-    //    *  to be an actual <code>Coordinate</code> object used in
-    //    *  the internal representation.
-    //    *
-    //    *@return a coordinate which is a vertex of this <code>Geometry</code>.
-    //    *@return null if this Geometry is empty
-    //    */
-    //   public abstract Coordinate getCoordinate();
-
-    //   /**
-    //    *  Returns an array containing the values of all the vertices for
-    //    *  this geometry.
-    //    *  If the geometry is a composite, the array will contain all the vertices
-    //    *  for the components, in the order in which the components occur in the geometry.
-    //    *  <p>
-    //    *  In general, the array cannot be assumed to be the actual internal
-    //    *  storage for the vertices.  Thus modifying the array
-    //    *  may not modify the geometry itself.
-    //    *  Use the {@link CoordinateSequence#setOrdinate} method
-    //    *  (possibly on the components) to modify the underlying data.
-    //    *  If the coordinates are modified,
-    //    *  {@link #geometryChanged} must be called afterwards.
-    //    *
-    //    *@return    the vertices of this <code>Geometry</code>
-    //    *@see #geometryChanged
-    //    *@see CoordinateSequence#setOrdinate
-    //    */
-    //   public abstract Coordinate[] getCoordinates();
-
-    //   /**
-    //    *  Returns the count of this <code>Geometry</code>s vertices. The <code>Geometry</code>
-    //    *  s contained by composite <code>Geometry</code>s must be
-    //    *  Geometry's; that is, they must implement <code>getNumPoints</code>
-    //    *
-    //    *@return    the number of vertices in this <code>Geometry</code>
-    //    */
-    //   public abstract int getNumPoints();
-
-      /**
-       * Tests whether this {@link Geometry} is simple.
-       * The SFS definition of simplicity
-       * follows the general rule that a Geometry is simple if it has no points of
-       * self-tangency, self-intersection or other anomalous points.
-       * <p>
-       * Simplicity is defined for each {@link Geometry} subclass as follows:
-       * <ul>
-       * <li>Valid polygonal geometries are simple, since their rings
-       * must not self-intersect.  <code>isSimple</code>
-       * tests for this condition and reports <code>false</code> if it is not met.
-       * (This is a looser test than checking for validity).
-       * <li>Linear rings have the same semantics.
-       * <li>Linear geometries are simple if they do not self-intersect at points
-       * other than boundary points.
-       * <li>Zero-dimensional geometries (points) are simple if they have no
-       * repeated points.
-       * <li>Empty <code>Geometry</code>s are always simple.
-       * </ul>
-       *
-       * @return <code>true</code> if this <code>Geometry</code> is simple
-       * @see #isValid
-       */
-      pub fn isSimple(self) -> bool {
-        IsSimpleOp op = new IsSimpleOp(this);
-        return op.isSimple();
-      }
-
-      /**
-       * Tests whether this <code>Geometry</code>
-       * is topologically valid, according to the OGC SFS specification.
-       * <p>
-       * For validity rules see the Javadoc for the specific Geometry subclass.
-       *
-       *@return <code>true</code> if this <code>Geometry</code> is valid
-       *
-       * @see IsValidOp
-       */
-      pub fn isValid(self) -> bool
-      {
-      	return IsValidOp.isValid(self);
-      }
-
-    //   /**
-    //    * Tests whether the set of points covered by this <code>Geometry</code> is
-    //    * empty.
+    //    * Tests whether this <code>Geometry</code>
+    //    * is topologically valid, according to the OGC SFS specification.
     //    * <p>
-    //    * Note this test is for topological emptiness,
-    //    * not structural emptiness.
-    //    * A collection containing only empty elements is reported as empty.
-    //    * To check structural emptiness use {@link #getNumGeometries()}.
+    //    * For validity rules see the Javadoc for the specific Geometry subclass.
     //    *
-    //    *@return <code>true</code> if this <code>Geometry</code> does not cover any points
+    //    *@return <code>true</code> if this <code>Geometry</code> is valid
+    //    *
+    //    * @see IsValidOp
     //    */
-    //   public abstract boolean isEmpty();
+    //   pub fn isValid(self) -> bool
+    //   {
+    //   	return IsValidOp.isValid(self);
+    //   }
 
-      /**
-       * Returns the minimum distance between this <code>Geometry</code>
-       * and another <code>Geometry</code>.
-       *
-       * @param  g the <code>Geometry</code> from which to compute the distance
-       * @return the distance between the geometries
-       * @return 0 if either input geometry is empty
-       * @throws IllegalArgumentException if g is null
-       */
-      pub fn distance(self, g: &Geometry) -> f64 {
-        return DistanceOp.distance(self, g);
-      }
-
-      /**
-       * Tests whether the distance from this <code>Geometry</code>
-       * to another is less than or equal to a specified value.
-       *
-       * @param geom the Geometry to check the distance to
-       * @param distance the distance value to compare
-       * @return <code>true</code> if the geometries are less than <code>distance</code> apart.
-       */
-      pub fn isWithinDistance(self, geom: &Geometry, distance: f64) -> bool {
-        return DistanceOp.isWithinDistance(self, geom, distance);
-      }
+    // //   /**
+    // //    * Tests whether the set of points covered by this <code>Geometry</code> is
+    // //    * empty.
+    // //    * <p>
+    // //    * Note this test is for topological emptiness,
+    // //    * not structural emptiness.
+    // //    * A collection containing only empty elements is reported as empty.
+    // //    * To check structural emptiness use {@link #getNumGeometries()}.
+    // //    *
+    // //    *@return <code>true</code> if this <code>Geometry</code> does not cover any points
+    // //    */
+    // //   public abstract boolean isEmpty();
 
     //   /**
-    //    * Tests whether this is a rectangular {@link Polygon}.
+    //    * Returns the minimum distance between this <code>Geometry</code>
+    //    * and another <code>Geometry</code>.
     //    *
-    //    * @return true if the geometry is a rectangle.
+    //    * @param  g the <code>Geometry</code> from which to compute the distance
+    //    * @return the distance between the geometries
+    //    * @return 0 if either input geometry is empty
+    //    * @throws IllegalArgumentException if g is null
     //    */
-    //   public boolean isRectangle()
-    //   {
-    //     // Polygon overrides to check for actual rectangle
-    //     return false;
+    //   pub fn distance(self, g: &Geometry) -> f64 {
+    //     return DistanceOp.distance(self, g);
     //   }
 
     //   /**
-    //    *  Returns the area of this <code>Geometry</code>.
-    //    *  Areal Geometries have a non-zero area.
-    //    *  They override this function to compute the area.
-    //    *  Others return 0.0
+    //    * Tests whether the distance from this <code>Geometry</code>
+    //    * to another is less than or equal to a specified value.
     //    *
-    //    *@return the area of the Geometry
+    //    * @param geom the Geometry to check the distance to
+    //    * @param distance the distance value to compare
+    //    * @return <code>true</code> if the geometries are less than <code>distance</code> apart.
     //    */
-    //   public double getArea()
-    //   {
-    //     return 0.0;
+    //   pub fn isWithinDistance(self, geom: &Geometry, distance: f64) -> bool {
+    //     return DistanceOp.isWithinDistance(self, geom, distance);
+    //   }
+
+    // //   /**
+    // //    * Tests whether this is a rectangular {@link Polygon}.
+    // //    *
+    // //    * @return true if the geometry is a rectangle.
+    // //    */
+    // //   public boolean isRectangle()
+    // //   {
+    // //     // Polygon overrides to check for actual rectangle
+    // //     return false;
+    // //   }
+
+    // //   /**
+    // //    *  Returns the area of this <code>Geometry</code>.
+    // //    *  Areal Geometries have a non-zero area.
+    // //    *  They override this function to compute the area.
+    // //    *  Others return 0.0
+    // //    *
+    // //    *@return the area of the Geometry
+    // //    */
+    // //   public double getArea()
+    // //   {
+    // //     return 0.0;
+    // //   }
+
+    // //   /**
+    // //    *  Returns the length of this <code>Geometry</code>.
+    // //    *  Linear geometries return their length.
+    // //    *  Areal geometries return their perimeter.
+    // //    *  They override this function to compute the area.
+    // //    *  Others return 0.0
+    // //    *
+    // //    *@return the length of the Geometry
+    // //    */
+    // //   public double getLength()
+    // //   {
+    // //     return 0.0;
+    // //   }
+
+    //   /**
+    //    * Computes the centroid of this <code>Geometry</code>.
+    //    * The centroid
+    //    * is equal to the centroid of the set of component Geometries of highest
+    //    * dimension (since the lower-dimension geometries contribute zero
+    //    * "weight" to the centroid).
+    //    * <p>
+    //    * The centroid of an empty geometry is <code>POINT EMPTY</code>.
+    //    *
+    //    * @return a {@link Point} which is the centroid of this Geometry
+    //    */
+    //   pub fn getCentroid(self) -> Point {
+    //     if self.isEmpty() { return factory.createPoint(); 
+    //     }
+    //     centPt = Centroid.getCentroid(self);
+    //     return createPointFromInternalCoord(centPt, self);
     //   }
 
     //   /**
-    //    *  Returns the length of this <code>Geometry</code>.
-    //    *  Linear geometries return their length.
-    //    *  Areal geometries return their perimeter.
-    //    *  They override this function to compute the area.
-    //    *  Others return 0.0
+    //    * Computes an interior point of this <code>Geometry</code>.
+    //    * An interior point is guaranteed to lie in the interior of the Geometry,
+    //    * if it possible to calculate such a point exactly. Otherwise,
+    //    * the point may lie on the boundary of the geometry.
+    //    * <p>
+    //    * The interior point of an empty geometry is <code>POINT EMPTY</code>.
     //    *
-    //    *@return the length of the Geometry
+    //    * @return a {@link Point} which is in the interior of this Geometry
     //    */
-    //   public double getLength()
-    //   {
-    //     return 0.0;
+    //   pub fn getInteriorPoint() -> Point {
+    //     if (isEmpty()) return factory.createPoint();
+    //     Coordinate pt = InteriorPoint.getInteriorPoint(this);
+    //     return createPointFromInternalCoord(pt, this);
     //   }
-
-      /**
-       * Computes the centroid of this <code>Geometry</code>.
-       * The centroid
-       * is equal to the centroid of the set of component Geometries of highest
-       * dimension (since the lower-dimension geometries contribute zero
-       * "weight" to the centroid).
-       * <p>
-       * The centroid of an empty geometry is <code>POINT EMPTY</code>.
-       *
-       * @return a {@link Point} which is the centroid of this Geometry
-       */
-      pub fn getCentroid(self) -> Point {
-        if self.isEmpty() { return factory.createPoint(); 
-        }
-        centPt = Centroid.getCentroid(self);
-        return createPointFromInternalCoord(centPt, self);
-      }
-
-      /**
-       * Computes an interior point of this <code>Geometry</code>.
-       * An interior point is guaranteed to lie in the interior of the Geometry,
-       * if it possible to calculate such a point exactly. Otherwise,
-       * the point may lie on the boundary of the geometry.
-       * <p>
-       * The interior point of an empty geometry is <code>POINT EMPTY</code>.
-       *
-       * @return a {@link Point} which is in the interior of this Geometry
-       */
-      pub fn getInteriorPoint() -> Point {
-        if (isEmpty()) return factory.createPoint();
-        Coordinate pt = InteriorPoint.getInteriorPoint(this);
-        return createPointFromInternalCoord(pt, this);
-      }
 
     //   /**
     //    * Returns the dimension of this geometry.

@@ -215,6 +215,18 @@ impl Envelope {
     }
 
     /**
+     *  Initialize an <code>Envelope</code> from an existing Envelope.
+     *
+     *@param  env  the Envelope to initialize from
+     */
+    pub fn init(&mut self, env: &Envelope) {
+        self.minx = env.minx;
+        self.maxx = env.maxx;
+        self.miny = env.miny;
+        self.maxy = env.maxy;
+    }
+
+    /**
      * Creates a copy of this envelope object.
      *
      * @return a copy of this envelope
