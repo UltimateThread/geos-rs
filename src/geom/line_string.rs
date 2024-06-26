@@ -25,6 +25,7 @@ use super::{
  *@version 1.7
  */
 
+ #[derive(Clone)]
 pub struct LineString {
     /**
      *  The points of this <code>LineString</code>.
@@ -250,7 +251,7 @@ impl LineString {
     //     filter.filter(self);
     //   }
 
-    pub fn copy_internal(&self) -> LineString {
+    pub fn copy(&self) -> LineString {
         return LineString::new_from_coordinate_sequence(self.points.copy());
     }
 
