@@ -179,7 +179,7 @@ impl Point {
     //     filter.filter(self);
     // }
 
-    pub fn copy_internal(&self) -> Point {
+    pub fn copy(&self) -> Point {
         return Point::new_with_coordinate_seq(&self.coordinates.copy());
     }
 

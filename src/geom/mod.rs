@@ -18,3 +18,4 @@ pub(crate) mod coordinates;
 pub(crate) mod dimension;
 pub(crate) mod envelope;
 pub(crate) mod multi_line_string;
+pub(crate) mod multi_point;
