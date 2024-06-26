@@ -1,6 +1,6 @@
 use std::fmt;
 
-use crate::geom::{coordinate::Coordinate, coordinate_arrays::CoordinateArrays, coordinates::Coordinates, envelope::Envelope};
+use crate::core::geom::{coordinate::Coordinate, coordinate_arrays::CoordinateArrays, coordinates::Coordinates, envelope::Envelope};
 
 #[derive(Clone)]
 pub struct CoordinateArraySequence {

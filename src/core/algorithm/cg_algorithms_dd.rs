@@ -10,7 +10,7 @@
  * http://www.eclipse.org/org/documents/edl-v10.php.
  */
 
-use crate::{geom::coordinate::Coordinate, math::dd::DD};
+use crate::core::{geom::coordinate::Coordinate, math::dd::DD};
 
 /**
  * Implements basic computational geometry algorithms using {@link DD} arithmetic.

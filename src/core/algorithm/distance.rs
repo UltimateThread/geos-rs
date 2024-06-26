@@ -1,4 +1,4 @@
-use crate::{
+use crate::core::{
     geom::{coordinate::Coordinate, envelope::Envelope},
     util::math_util::MathUtil,
 };

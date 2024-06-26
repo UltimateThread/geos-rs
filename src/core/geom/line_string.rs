@@ -1,4 +1,4 @@
-use crate::algorithm::length::Length;
+use crate::core::algorithm::length::Length;
 
 use super::{
     coordinate::Coordinate, coordinate_array_sequences::CoordinateArraySequences,

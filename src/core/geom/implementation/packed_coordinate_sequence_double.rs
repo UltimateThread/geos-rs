@@ -1,4 +1,4 @@
-use crate::geom::{coordinate::Coordinate, envelope::Envelope};
+use crate::core::geom::{coordinate::Coordinate, envelope::Envelope};
 
 
 /**

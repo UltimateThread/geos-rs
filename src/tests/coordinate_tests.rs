@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod coordinate_tests {
-    use crate::geom::coordinate::Coordinate;
+    use crate::core::geom::coordinate::Coordinate;
 
     #[test]
     fn test_constructor_3d() {

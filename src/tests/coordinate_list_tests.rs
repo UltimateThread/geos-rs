@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod coordinate_list_tests {
-    use crate::geom::{coordinate::Coordinate, coordinate_list::CoordinateList};
+    use crate::core::geom::{coordinate::Coordinate, coordinate_list::CoordinateList};
 
     #[test]
     fn test_forward() {

@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod packed_coordinate_sequences_tests {
-    use crate::geom::{
+    use crate::core::geom::{
         coordinate::Coordinate,
         implementation::{
             packed_coordinate_sequence_double::PackedCoordinateSequenceDouble,

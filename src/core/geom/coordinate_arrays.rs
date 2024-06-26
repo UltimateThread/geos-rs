@@ -1,4 +1,4 @@
-use crate::util::math_util::MathUtil;
+use crate::core::util::math_util::MathUtil;
 
 use super::{coordinate::Coordinate, coordinate_list::CoordinateList, coordinates::Coordinates, envelope::Envelope};
 

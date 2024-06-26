@@ -1,4 +1,4 @@
-use crate::geom::{
+use crate::core::geom::{
     coordinate::Coordinate, implementation::coordinate_array_sequence::CoordinateArraySequence,
 };
 

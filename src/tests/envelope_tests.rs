@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod envelope_tests {
-    use crate::geom::{coordinate::Coordinate, envelope::Envelope};
+    use crate::core::geom::{coordinate::Coordinate, envelope::Envelope};
 
     #[test]
     fn test_everything() {

@@ -1,7 +1,4 @@
 #![allow(dead_code)]
 
-mod util;
-mod geom;
-mod algorithm;
+mod core;
 mod tests;
-mod math;

@@ -1,4 +1,4 @@
-use crate::geom::implementation::coordinate_array_sequence::CoordinateArraySequence;
+use crate::core::geom::implementation::coordinate_array_sequence::CoordinateArraySequence;
 
 /**
  * Functions for computing length.

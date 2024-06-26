@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod coordinate_arrays_tests {
-    use crate::geom::{coordinate::Coordinate, coordinate_arrays::CoordinateArrays, envelope::Envelope, precision_model::PrecisionModel};
+    use crate::core::geom::{coordinate::Coordinate, coordinate_arrays::CoordinateArrays, envelope::Envelope, precision_model::PrecisionModel};
 
     #[test]
     fn test_pt_not_in_list1() {

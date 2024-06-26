@@ -1,4 +1,4 @@
-use crate::geom::coordinate::Coordinate;
+use crate::core::geom::coordinate::Coordinate;
 
 use super::{cg_algorithms_dd::CGAlgorithmsDD, distance::Distance, orientation::Orientation};
 

@@ -1,4 +1,4 @@
-use crate::geom::coordinate::Coordinate;
+use crate::core::geom::coordinate::Coordinate;
 
 use super::packed_coordinate_sequence_double::PackedCoordinateSequenceDouble;
 

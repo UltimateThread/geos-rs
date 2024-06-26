@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod coordinate_array_sequences_tests {
-    use crate::geom::{coordinate::Coordinate, coordinate_array_sequences::CoordinateArraySequences, implementation::{coordinate_array_sequence::CoordinateArraySequence, coordinate_array_sequence_factory::CoordinateArraySequenceFactory}, precision_model::PrecisionModel};
+    use crate::core::geom::{coordinate::Coordinate, coordinate_array_sequences::CoordinateArraySequences, implementation::{coordinate_array_sequence::CoordinateArraySequence, coordinate_array_sequence_factory::CoordinateArraySequenceFactory}, precision_model::PrecisionModel};
 
     const ORDINATE_VALUES: [[f64; 2]; 20] = [
         [75.76, 77.43],

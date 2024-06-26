@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod line_segment_tests {
-    use crate::geom::{coordinate::Coordinate, line_segment::LineSegment};
+    use crate::core::geom::{coordinate::Coordinate, line_segment::LineSegment};
 
     const MAX_ABS_ERROR_INTERSECTION: f64 = 1e-5;
 

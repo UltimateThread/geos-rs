@@ -1,6 +1,6 @@
 use std::fmt;
 
-use crate::util::number_util::NumberUtil;
+use crate::core::util::number_util::NumberUtil;
 
 #[derive(Copy, Clone)]
 pub struct Coordinate {

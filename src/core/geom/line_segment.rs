@@ -1,4 +1,4 @@
-use crate::algorithm::{
+use crate::core::algorithm::{
     distance::Distance, intersection::Intersection, orientation::Orientation,
     robust_line_intersector::RobustLineIntersector,
 };

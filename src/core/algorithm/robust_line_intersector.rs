@@ -1,4 +1,4 @@
-use crate::geom::{coordinate::Coordinate, envelope::Envelope, precision_model::PrecisionModel};
+use crate::core::geom::{coordinate::Coordinate, envelope::Envelope, precision_model::PrecisionModel};
 
 use super::{distance::Distance, intersection::Intersection, orientation::Orientation};
 
