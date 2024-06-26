@@ -7,6 +7,7 @@ pub(crate) mod packed_coordinate_sequences;
 pub(crate) mod geometry;
 pub(crate) mod geometry_factory;
 pub(crate) mod line_segment;
+pub(crate) mod line_string;
 pub(crate) mod coordinate_sequence_comparator;
 pub(crate) mod coordinate_array_sequences;
 pub(crate) mod coordinate_list;

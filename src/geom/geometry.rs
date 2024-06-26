@@ -1,4 +1,4 @@
-use super::{envelope::Envelope, geometry_factory::GeometryFactory};
+use super::{coordinate::Coordinate, envelope::Envelope, geometry_factory::GeometryFactory};
 
 
 /**
@@ -1825,10 +1825,10 @@ impl Geometry {
     //     return 0;
     //   }
 
-    //   protected boolean equal(Coordinate a, Coordinate b, double tolerance) {
-    //     if (tolerance == 0) { return a.equals(b); }
-    //     return a.distance(b) <= tolerance;
-    //   }
+      pub fn equal(a: &Coordinate, b: &Coordinate, tolerance: f64) -> bool {
+        if tolerance == 0. { return a.equals_2d(b); }
+        return a.distance(b) <= tolerance;
+      }
 
     //   abstract protected int getTypeCode();
 
