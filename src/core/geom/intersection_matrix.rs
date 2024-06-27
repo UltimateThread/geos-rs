@@ -80,7 +80,7 @@ impl IntersectionMatrix {
      *
      *@param  other  an <code>IntersectionMatrix</code> to copy
      */
-    pub fn new_from_intersection_matrix(other: IntersectionMatrix) -> Self {
+    pub fn new_from_intersection_matrix(other: &IntersectionMatrix) -> Self {
         let mut new = IntersectionMatrix::default();
         new.matrix[Location::INTERIOR as usize][Location::INTERIOR as usize] =
             other.matrix[Location::INTERIOR as usize][Location::INTERIOR as usize];
@@ -560,6 +560,17 @@ impl IntersectionMatrix {
                 == Dimension::FALSE;
     }
 
+    pub fn equals(&self, other: &IntersectionMatrix) -> bool {
+        for i in 0..3 {
+            for j in 0..3 {
+                if self.matrix[i][j] != other.matrix[i][j] {
+                    return false;
+                }
+            }
+        }
+        true
+    }
+
     /**
      * Tests if this matrix matches
      *  <UL>
@@ -646,21 +657,24 @@ impl IntersectionMatrix {
         self.matrix[1][2] = temp;
     }
 
-    //   /**
-    //    *  Returns a nine-character <code>String</code> representation of this <code>IntersectionMatrix</code>
-    //    *  .
-    //    *
-    //    *@return    the nine dimension symbols of this <code>IntersectionMatrix</code>
-    //    *      in row-major order.
-    //    */
-    // TODO: Implement ME!
-    //   public String toString() {
-    //     StringBuilder builder = new StringBuilder("123456789");
-    //     for (int ai = 0; ai < 3; ai++) {
-    //       for (int bi = 0; bi < 3; bi++) {
-    //         builder.setCharAt(3 * ai + bi, Dimension::toDimensionSymbol(matrix[ai][bi]));
-    //       }
-    //     }
-    //     return builder.toString();
-    //   }
+    /**
+     *  Returns a nine-character <code>String</code> representation of this <code>IntersectionMatrix</code>
+     *  .
+     *
+     *@return    the nine dimension symbols of this <code>IntersectionMatrix</code>
+     *      in row-major order.
+     */
+    pub fn to_string(&self) -> String {
+        let mut output = "".to_owned();
+        for ai in 0..3 {
+            for bi in 0..3 {
+                let character = Dimension::to_dimension_symbol(self.matrix[ai][bi]);
+                match character {
+                    Some(character) => output.push(character),
+                    None => {}
+                }
+            }
+        }
+        output
+    }
 }

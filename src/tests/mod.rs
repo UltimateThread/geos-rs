@@ -6,3 +6,4 @@ mod envelope_tests;
 mod line_segment_tests;
 mod packed_coordinate_sequences_tests;
 mod multi_point_impl_tests;
+mod intersection_matrix_tests;
