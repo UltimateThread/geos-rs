@@ -1,6 +1,5 @@
 use super::{
-    coordinate::Coordinate, dimension::Dimension, envelope::Envelope, geometry::Geometry,
-    point::Point, precision_model::PrecisionModel,
+    coordinate::Coordinate, dimension::Dimension, envelope::Envelope, geometry::Geometry, point::Point, precision_model::PrecisionModel
 };
 
 /**
@@ -54,7 +53,19 @@ impl MultiPoint {
         }
     }
 
-    pub fn get_dimension() -> i32 {
+    pub fn is_empty(&self) -> bool {
+        return self.points.len() == 0;
+    }
+
+    pub fn get_num_points(&self) -> usize {
+        return self.points.len();
+    }
+
+    pub fn get_precision_model(&self) -> Option<PrecisionModel> {
+        return self.precision_model;
+    }
+
+    pub fn get_dimension(&self) -> i32 {
         return 0;
     }
 
@@ -83,6 +94,35 @@ impl MultiPoint {
     //     return getFactory().createGeometryCollection();
     //   }
 
+    /**
+     * Gets an {@link Envelope} containing
+     * the minimum and maximum x and y values in this <code>Geometry</code>.
+     * If the geometry is empty, an empty <code>Envelope</code>
+     * is returned.
+     * <p>
+     * The returned object is a copy of the one maintained internally,
+     * to avoid aliasing issues.
+     * For best performance, clients which access this
+     * envelope frequently should cache the return value.
+     *
+     *@return the envelope of this <code>Geometry</code>.
+     *@return an empty Envelope if this Geometry is empty
+     */
+    pub fn get_envelope_internal(&mut self) -> Envelope {
+        if self.envelope.is_none() {
+            self.envelope = Some(self.compute_envelope_internal());
+        }
+        return Envelope::new_envelope(&self.envelope.unwrap());
+    }
+
+    fn compute_envelope_internal(&mut self) -> Envelope {
+        let mut envelope = Envelope::default();
+        for i in 0..self.points.len() {
+            envelope.expand_to_include_envelope(&self.points[i].get_envelope_internal());
+        }
+        return envelope;
+    }
+
     pub fn reverse(&self) -> MultiPoint {
         let mut res = self.reverse_internal();
         if self.envelope.is_some() {
@@ -100,6 +140,73 @@ impl MultiPoint {
         return MultiPoint::new_with_points(&points);
     }
 
+    /**
+     * Tests whether this geometry is
+     * topologically equal to the argument geometry.
+     * <p>
+     * This method is included for backward compatibility reasons.
+     * It has been superseded by the {@link #equalsTopo(Geometry)} method,
+     * which has been named to clearly denote its functionality.
+     * <p>
+     * This method should NOT be confused with the method
+     * {@link #equals(Object)}, which implements
+     * an exact equality comparison.
+     *
+     *@param  g  the <code>Geometry</code> with which to compare this <code>Geometry</code>
+     *@return true if the two <code>Geometry</code>s are topologically equal
+     *
+     *@see #equalsTopo(Geometry)
+     */
+    // pub fn equals(&mut self, multipoint: &mut MultiPoint) -> bool {
+    //     return self.equals_topo(multipoint);
+    // }
+
+    /**
+     * Tests whether this geometry is topologically equal to the argument geometry
+     * as defined by the SFS <code>equals</code> predicate.
+     * <p>
+     * The SFS <code>equals</code> predicate has the following equivalent definitions:
+     * <ul>
+     * <li>The two geometries have at least one point in common,
+     * and no point of either geometry lies in the exterior of the other geometry.
+     * <li>The DE-9IM Intersection Matrix for the two geometries matches
+     * the pattern <code>T*F**FFF*</code>
+     * <pre>
+     * T*F
+     * **F
+     * FF*
+     * </pre>
+     * </ul>
+     * <b>Note</b> that this method computes <b>topologically equality</b>.
+     * For structural equality, see {@link #equalsExact(Geometry)}.
+     *
+     *@param g the <code>Geometry</code> with which to compare this <code>Geometry</code>
+     *@return <code>true</code> if the two <code>Geometry</code>s are topologically equal
+     *
+     *@see #equalsExact(Geometry)
+     */
+    // pub fn equals_topo(&mut self, multipoint: &mut MultiPoint) -> bool {
+    //     // short-circuit test
+    //     if !self
+    //         .get_envelope_internal()
+    //         .equals(&multipoint.get_envelope_internal())
+    //     {
+    //         return false;
+    //     }
+    //     return self.relate(multipoint).is_equals(self.get_dimension(), multipoint.get_dimension());
+    // }
+
+    // /**
+    //  *  Returns the DE-9IM {@link IntersectionMatrix} for the two <code>Geometry</code>s.
+    //  *
+    //  *@param  g  the <code>Geometry</code> with which to compare this <code>Geometry</code>
+    //  *@return        an {@link IntersectionMatrix} describing the intersections of the interiors,
+    //  *      boundaries and exteriors of the two <code>Geometry</code>s
+    //  */
+    // pub fn relate(&self, multipoint: &MultiPoint) -> IntersectionMatrix {
+    //     return RelateOpMultiPoint::relate_multipoints(self, multipoint);
+    // }
+
     pub fn equals_exact(&self, other: MultiPoint, tolerance: f64) -> bool {
         if self.points.len() != other.points.len() {
             return false;
@@ -110,6 +217,13 @@ impl MultiPoint {
             }
         }
         return true;
+    }
+
+    pub fn get_point_at_index(&self, index: usize) -> Option<Point> {
+        if self.points.len() == 0 || self.points.len() < index - 1 {
+            return None;
+        }
+        return Some(self.points[index].copy());
     }
 
     /**

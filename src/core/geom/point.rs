@@ -1,6 +1,16 @@
-use super::{coordinate::Coordinate, coordinate_sequence_comparator::CoordinateSequenceComparator, coordinates::Coordinates, dimension::Dimension, envelope::Envelope, geometry::Geometry, implementation::{coordinate_array_sequence::CoordinateArraySequence, coordinate_array_sequence_factory::CoordinateArraySequenceFactory}};
-
-
+use super::{
+    coordinate::Coordinate,
+    coordinate_sequence_comparator::CoordinateSequenceComparator,
+    coordinates::Coordinates,
+    dimension::Dimension,
+    envelope::Envelope,
+    geometry::Geometry,
+    implementation::{
+        coordinate_array_sequence::CoordinateArraySequence,
+        coordinate_array_sequence_factory::CoordinateArraySequenceFactory,
+    },
+    precision_model::PrecisionModel,
+};
 
 #[derive(Clone)]
 pub struct Point {
@@ -13,6 +23,7 @@ pub struct Point {
      *  The bounding box of this <code>Geometry</code>.
      */
     envelope: Option<Envelope>,
+    precision_model: Option<PrecisionModel>,
 }
 
 impl Point {
@@ -21,6 +32,30 @@ impl Point {
         Self {
             coordinates: CoordinateArraySequenceFactory::create_from_coordinates(&coords),
             envelope: None,
+            precision_model: None,
+        }
+    }
+
+    /**
+     *  Constructs a <code>Point</code> with the given coordinate.
+     *
+     *@param  coordinate      the coordinate on which to base this <code>Point</code>
+     *      , or <code>null</code> to create the empty geometry.
+     *@param  precisionModel  the specification of the grid of allowable points
+     *      for this <code>Point</code>
+     *@param  SRID            the ID of the Spatial Reference System used by this
+     *      <code>Point</code>
+     * @deprecated Use GeometryFactory instead
+     */
+    pub fn new_with_coordinate(
+        coordinate: &Coordinate,
+        precision_model: Option<PrecisionModel>,
+    ) -> Self {
+        let coords: Vec<Coordinate> = vec![Coordinate::from_coordinate(&coordinate)];
+        Self {
+            coordinates: CoordinateArraySequenceFactory::create_from_coordinates(&coords),
+            envelope: None,
+            precision_model,
         }
     }
 
@@ -34,6 +69,7 @@ impl Point {
         Self {
             coordinates: coordinates.copy(),
             envelope: None,
+            precision_model: None,
         }
     }
 
@@ -106,6 +142,27 @@ impl Point {
     // pub fn get_boundary() -> Geometry {
     //     return GeometryCollection::default();
     // }
+
+    /**
+     * Gets an {@link Envelope} containing
+     * the minimum and maximum x and y values in this <code>Geometry</code>.
+     * If the geometry is empty, an empty <code>Envelope</code>
+     * is returned.
+     * <p>
+     * The returned object is a copy of the one maintained internally,
+     * to avoid aliasing issues.
+     * For best performance, clients which access this
+     * envelope frequently should cache the return value.
+     *
+     *@return the envelope of this <code>Geometry</code>.
+     *@return an empty Envelope if this Geometry is empty
+     */
+    pub fn get_envelope_internal(&mut self) -> Envelope {
+        if self.envelope.is_none() {
+            self.envelope = Some(self.compute_envelope_internal());
+        }
+        return Envelope::new_envelope(&self.envelope.unwrap());
+    }
 
     pub fn compute_envelope_internal(&self) -> Envelope {
         if self.is_empty() {

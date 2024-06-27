@@ -365,7 +365,7 @@ impl PrecisionModel {
    *@return    a negative integer, zero, or a positive integer as this <code>PrecisionModel</code>
    *      is less than, equal to, or greater than the specified <code>PrecisionModel</code>
    */
-  pub fn compare_to(&self, other: PrecisionModel) -> i32 {
+  pub fn compare_to(&self, other: &PrecisionModel) -> i32 {
     let sig_digits = self.get_maximum_significant_digits();
     let other_sig_digits = other.get_maximum_significant_digits();
 

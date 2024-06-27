@@ -1,4 +1,6 @@
-use crate::core::geom::{coordinate::Coordinate, envelope::Envelope, precision_model::PrecisionModel};
+use crate::core::geom::{
+    coordinate::Coordinate, envelope::Envelope, precision_model::PrecisionModel,
+};
 
 use super::{distance::Distance, intersection::Intersection, orientation::Orientation};
 
@@ -59,6 +61,15 @@ impl RobustLineIntersector {
         };
 
         new
+    }
+
+    /**
+     * Force computed intersection to be rounded to a given precision model.
+     * No getter is provided, because the precision model is not required to be specified.
+     * @param precisionModel
+     */
+    pub fn set_precision_model(&mut self, precision_model: PrecisionModel) {
+        self.precision_model = Some(precision_model);
     }
 
     /**
