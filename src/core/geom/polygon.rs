@@ -284,9 +284,9 @@ impl Polygon {
         return self.shell.get_envelope_internal();
     }
 
-    pub fn equals_exact(&self, other: Polygon, tolerance: f64) -> bool {
+    pub fn equals_exact(&self, other: &Polygon, tolerance: f64) -> bool {
         let this_shell = self.shell.copy();
-        let other_polygon_shell = other.shell;
+        let other_polygon_shell = other.shell.copy();
         if !this_shell.equals_exact(&other_polygon_shell, tolerance) {
             return false;
         }
