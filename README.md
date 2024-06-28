@@ -12,6 +12,6 @@ The official Git repository is at [GitHub](https://github.com/UltimateThread/geo
 
 | CI    | Status |
 | :---: | :----- |
-| GitHub | [![github](https://github.com/UltimateThread/geos-rs/actions/workflows/rust.yml/badge.svg)] | 
+| GitHub | ![github](https://github.com/UltimateThread/geos-rs/actions/workflows/build.yml/badge.svg) | 
 
 Disclaimer: This library is under development and NOT actively maintained. Use at your own risk!
