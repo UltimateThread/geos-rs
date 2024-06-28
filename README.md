@@ -10,4 +10,8 @@ the algorithms used by [PostGIS](http://www.postgis.net/), the
 
 The official Git repository is at [GitHub](https://github.com/UltimateThread/geos-rs).
 
+| CI    | Status |
+| :---: | :----- |
+| GitHub | [![github](https://github.com/UltimateThread/geos-rs/workflows/RUST/badge.svg?branch/main)](https://github.com/UltimateThread/geos-rs/actions?query=workflow:RUST+branch:main) | 
+
 Disclaimer: This library is under development and NOT actively maintained. Use at your own risk!
