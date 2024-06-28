@@ -22,3 +22,4 @@ pub(crate) mod intersection_matrix;
 pub(crate) mod location;
 pub(crate) mod linear_ring;
 pub(crate) mod multi_polygon;
+pub(crate) mod octagonal_envelope;
