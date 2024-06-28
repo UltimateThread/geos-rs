@@ -139,7 +139,7 @@ impl Orientation {
         // rings have the same start and end point.
         let mut up_hi_pt = ring.get_coordinate_index(0);
         let mut prev_y = up_hi_pt.y;
-        let mut up_low_pt: Coordinate = Coordinate::default();
+        let mut up_low_pt= Coordinate::default();
         let mut i_up_hi = 0;
         for i in 1..=n_pts {
             let py = ring.get_ordinate(i, Coordinate::Y);
@@ -172,7 +172,10 @@ impl Orientation {
         }
 
         let down_low_pt = ring.get_coordinate_index(i_down_low);
-        let i_down_hi = n_pts - 1;
+        let mut i_down_hi = n_pts - 1;
+        if i_down_low > 0 {
+            i_down_hi = i_down_low - 1;
+        }
         let down_hi_pt = ring.get_coordinate_index(i_down_hi);
 
         //  Two cases can occur:

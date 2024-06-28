@@ -1,10 +1,9 @@
 #[cfg(test)]
 mod angle_tests {
     use crate::core::{
-        algorithm::angle::Angle,
+        algorithm::{angle::Angle, orientation::Orientation},
         geom::{
-            coordinate::Coordinate, envelope::Envelope, geometry_factory::GeometryFactory,
-            multi_point::MultiPoint, precision_model::PrecisionModel,
+            coordinate::Coordinate, coordinate_array_sequences::CoordinateArraySequences, envelope::Envelope, geometry_factory::GeometryFactory, implementation::coordinate_array_sequence_factory::CoordinateArraySequenceFactory, multi_point::MultiPoint, precision_model::PrecisionModel
         },
     };
     use rand::Rng;
@@ -166,46 +165,45 @@ mod angle_tests {
         assert_eq!(315., f64::to_degrees(Angle::interior_angle(&p2, &p1, &p3)));
     }
 
-    // /**
-    //  * Tests interior angle calculation using a number of random triangles
-    //  */
-    // #[test]
-    // TODO: Fix isCCW!
-    // fn test_interior_angle_random_triangles() {
-    //     for _i in 0..100 {
-    //         let three_random_points = get_random_points(3);
-    //         let triangle = GeometryFactory::create_polygon_with_coordinate_array_sequence(
-    //             &CoordinateArraySequences::ensure_valid_ring(
-    //                 &CoordinateArraySequenceFactory::create_from_coordinates(
-    //                     &three_random_points.get_coordinates(),
-    //                 ),
-    //             ),
-    //         );
-    //         // Triangle coordinates in clockwise order
-    //         let c: Vec<Coordinate>;
-    //         let triangle_coords = triangle.get_coordinates();
-    //         let is_ccw = Orientation::is_ccw_vec(&triangle_coords);
-    //         if is_ccw {
-    //             c = triangle.reverse().get_coordinates();
-    //         } else {
-    //             c = triangle.get_coordinates();
-    //         }
+    /**
+     * Tests interior angle calculation using a number of random triangles
+     */
+    #[test]
+    fn test_interior_angle_random_triangles() {
+        for _i in 0..100 {
+            let three_random_points = get_random_points(3);
+            let triangle = GeometryFactory::create_polygon_with_coordinate_array_sequence(
+                &CoordinateArraySequences::ensure_valid_ring(
+                    &CoordinateArraySequenceFactory::create_from_coordinates(
+                        &three_random_points.get_coordinates(),
+                    ),
+                ),
+            );
+            // Triangle coordinates in clockwise order
+            let c: Vec<Coordinate>;
+            let triangle_coords = triangle.get_coordinates();
+            let is_ccw = Orientation::is_ccw_vec(&triangle_coords);
+            if is_ccw {
+                c = triangle.reverse().get_coordinates();
+            } else {
+                c = triangle.get_coordinates();
+            }
 
-    //         let ia1 = Angle::interior_angle(&c[0], &c[1], &c[2]);
-    //         let ia2 = Angle::interior_angle(&c[1], &c[2], &c[0]);
-    //         let ia3 = Angle::interior_angle(&c[2], &c[0], &c[1]);
+            let ia1 = Angle::interior_angle(&c[0], &c[1], &c[2]);
+            let ia2 = Angle::interior_angle(&c[1], &c[2], &c[0]);
+            let ia3 = Angle::interior_angle(&c[2], &c[0], &c[1]);
 
-    //         let sum_of_interior_angles = ia1 + ia2 + ia3;
-    //         println!("{}", sum_of_interior_angles);
-    //         if sum_of_interior_angles > 3.15 {
-    //             println!("")
-    //         }
-    //         assert!(
-    //             sum_of_interior_angles >= (std::f64::consts::PI - 0.01)
-    //                 && sum_of_interior_angles <= (std::f64::consts::PI + 0.01)
-    //         );
-    //     }
-    // }
+            let sum_of_interior_angles = ia1 + ia2 + ia3;
+            println!("{}", sum_of_interior_angles);
+            if sum_of_interior_angles > 3.15 {
+                println!("")
+            }
+            assert!(
+                sum_of_interior_angles >= (std::f64::consts::PI - 0.01)
+                    && sum_of_interior_angles <= (std::f64::consts::PI + 0.01)
+            );
+        }
+    }
 
     fn get_random_points(num_pts: usize) -> MultiPoint {
         let mut pts: Vec<Coordinate> = vec![Coordinate::default(); num_pts];
