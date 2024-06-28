@@ -49,7 +49,7 @@ impl Area {
         //  Based on the Shoelace formula.
         //  http://en.wikipedia.org/wiki/Shoelace_formula
         let x0 = ring[0].x;
-        for i in 1..ring.len() {
+        for i in 1..(ring.len()-1) {
             let x = ring[i].x - x0;
             let y1 = ring[i + 1].y;
             let y2 = ring[i - 1].y;

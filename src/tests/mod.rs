@@ -1,4 +1,5 @@
 mod angle_tests;
+mod area_test;
 mod coordinate_tests;
 mod coordinate_array_sequences_tests;
 mod coordinate_arrays_tests;
