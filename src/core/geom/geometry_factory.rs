@@ -7,7 +7,9 @@ use super::{
         coordinate_array_sequence_factory::CoordinateArraySequenceFactory,
     },
     line_string::LineString,
+    linear_ring::LinearRing,
     point::Point,
+    polygon::Polygon,
     precision_model::PrecisionModel,
 };
 
@@ -224,39 +226,46 @@ impl GeometryFactory {
     // return new MultiPolygon(polygons, this);
     // }
 
-    // /**
-    // * Constructs an empty {@link LinearRing} geometry.
-    // *
-    // * @return an empty LinearRing
-    // */
-    // public LinearRing createLinearRing() {
-    // return createLinearRing(getCoordinateSequenceFactory().create(new Coordinate[]{}));
-    // }
+    /**
+     * Constructs an empty {@link LinearRing} geometry.
+     *
+     * @return an empty LinearRing
+     */
+    pub fn create_linear_ring() -> LinearRing {
+        let coords: Vec<Coordinate> = vec![];
+        return GeometryFactory::create_linear_ring_with_coordinate_array_sequence(
+            &CoordinateArraySequenceFactory::create_from_coordinates(&coords),
+        );
+    }
 
-    // /**
-    // * Creates a {@link LinearRing} using the given {@link Coordinate}s.
-    // * A null or empty array creates an empty LinearRing.
-    // * The points must form a closed and simple linestring.
-    // * @param coordinates an array without null elements, or an empty array, or null
-    // * @return the created LinearRing
-    // * @throws IllegalArgumentException if the ring is not closed, or has too few points
-    // */
-    // public LinearRing createLinearRing(Coordinate[] coordinates) {
-    // return createLinearRing(coordinates != null ? getCoordinateSequenceFactory().create(coordinates) : null);
-    // }
+    /**
+     * Creates a {@link LinearRing} using the given {@link Coordinate}s.
+     * A null or empty array creates an empty LinearRing.
+     * The points must form a closed and simple linestring.
+     * @param coordinates an array without null elements, or an empty array, or null
+     * @return the created LinearRing
+     * @throws IllegalArgumentException if the ring is not closed, or has too few points
+     */
+    pub fn create_linear_ring_with_coordinates(coordinates: &Vec<Coordinate>) -> LinearRing {
+        return GeometryFactory::create_linear_ring_with_coordinate_array_sequence(
+            &CoordinateArraySequenceFactory::create_from_coordinates(coordinates),
+        );
+    }
 
-    // /**
-    // * Creates a {@link LinearRing} using the given {@link CoordinateSequence}.
-    // * A null or empty array creates an empty LinearRing.
-    // * The points must form a closed and simple linestring.
-    // *
-    // * @param coordinates a CoordinateSequence (possibly empty), or null
-    // * @return the created LinearRing
-    // * @throws IllegalArgumentException if the ring is not closed, or has too few points
-    // */
-    // public LinearRing createLinearRing(CoordinateSequence coordinates) {
-    // return new LinearRing(coordinates, this);
-    // }
+    /**
+     * Creates a {@link LinearRing} using the given {@link CoordinateSequence}.
+     * A null or empty array creates an empty LinearRing.
+     * The points must form a closed and simple linestring.
+     *
+     * @param coordinates a CoordinateSequence (possibly empty), or null
+     * @return the created LinearRing
+     * @throws IllegalArgumentException if the ring is not closed, or has too few points
+     */
+    pub fn create_linear_ring_with_coordinate_array_sequence(
+        coordinates: &CoordinateArraySequence,
+    ) -> LinearRing {
+        return LinearRing::new_with_coordinate_array_sequence(coordinates);
+    }
 
     // /**
     // * Constructs an empty {@link MultiPoint} geometry.
@@ -327,71 +336,71 @@ impl GeometryFactory {
     // return createMultiPoint(points);
     // }
 
-    // /**
-    // * Constructs a <code>Polygon</code> with the given exterior boundary and
-    // * interior boundaries.
-    // *
-    // * @param shell
-    // *            the outer boundary of the new <code>Polygon</code>, or
-    // *            <code>null</code> or an empty <code>LinearRing</code> if
-    // *            the empty geometry is to be created.
-    // * @param holes
-    // *            the inner boundaries of the new <code>Polygon</code>, or
-    // *            <code>null</code> or empty <code>LinearRing</code> s if
-    // *            the empty geometry is to be created.
-    // * @throws IllegalArgumentException if a ring is invalid
-    // */
-    // public Polygon createPolygon(LinearRing shell, LinearRing[] holes) {
-    // return new Polygon(shell, holes, this);
-    // }
+    /**
+     * Constructs a <code>Polygon</code> with the given exterior boundary and
+     * interior boundaries.
+     *
+     * @param shell
+     *            the outer boundary of the new <code>Polygon</code>, or
+     *            <code>null</code> or an empty <code>LinearRing</code> if
+     *            the empty geometry is to be created.
+     * @param holes
+     *            the inner boundaries of the new <code>Polygon</code>, or
+     *            <code>null</code> or empty <code>LinearRing</code> s if
+     *            the empty geometry is to be created.
+     * @throws IllegalArgumentException if a ring is invalid
+     */
+    pub fn create_polygon_with_linear_ring_vec(
+        shell: &LinearRing,
+        holes: &Vec<LinearRing>,
+    ) -> Polygon {
+        return Polygon::new_with_linear_ring_vec(shell, holes);
+    }
 
-    // /**
-    // * Constructs a <code>Polygon</code> with the given exterior boundary.
-    // *
-    // * @param shell
-    // *            the outer boundary of the new <code>Polygon</code>, or
-    // *            <code>null</code> or an empty <code>LinearRing</code> if
-    // *            the empty geometry is to be created.
-    // * @throws IllegalArgumentException if the boundary ring is invalid
-    // */
-    // public Polygon createPolygon(CoordinateSequence shell) {
-    // return createPolygon(createLinearRing(shell));
-    // }
+    /**
+     * Constructs a <code>Polygon</code> with the given exterior boundary.
+     *
+     * @param shell
+     *            the outer boundary of the new <code>Polygon</code>, or
+     *            <code>null</code> or an empty <code>LinearRing</code> if
+     *            the empty geometry is to be created.
+     * @throws IllegalArgumentException if the boundary ring is invalid
+     */
+    pub fn create_polygon_with_coordinate_array_sequence(
+        shell: &CoordinateArraySequence,
+    ) -> Polygon {
+        return GeometryFactory::create_polygon_with_linear_ring(
+            &GeometryFactory::create_linear_ring_with_coordinate_array_sequence(shell),
+        );
+    }
 
-    // /**
-    // * Constructs a <code>Polygon</code> with the given exterior boundary.
-    // *
-    // * @param shell
-    // *            the outer boundary of the new <code>Polygon</code>, or
-    // *            <code>null</code> or an empty <code>LinearRing</code> if
-    // *            the empty geometry is to be created.
-    // * @throws IllegalArgumentException if the boundary ring is invalid
-    // */
-    // public Polygon createPolygon(Coordinate[] shell) {
-    // return createPolygon(createLinearRing(shell));
-    // }
+    /**
+     * Constructs a <code>Polygon</code> with the given exterior boundary.
+     *
+     * @param shell
+     *            the outer boundary of the new <code>Polygon</code>, or
+     *            <code>null</code> or an empty <code>LinearRing</code> if
+     *            the empty geometry is to be created.
+     * @throws IllegalArgumentException if the boundary ring is invalid
+     */
+    pub fn create_polygon_with_coordinates(shell: &Vec<Coordinate>) -> Polygon {
+        return GeometryFactory::create_polygon_with_linear_ring(
+            &GeometryFactory::create_linear_ring_with_coordinates(shell),
+        );
+    }
 
-    // /**
-    // * Constructs a <code>Polygon</code> with the given exterior boundary.
-    // *
-    // * @param shell
-    // *            the outer boundary of the new <code>Polygon</code>, or
-    // *            <code>null</code> or an empty <code>LinearRing</code> if
-    // *            the empty geometry is to be created.
-    // * @throws IllegalArgumentException if the boundary ring is invalid
-    // */
-    // public Polygon createPolygon(LinearRing shell) {
-    // return createPolygon(shell, null);
-    // }
-
-    // /**
-    // * Constructs an empty {@link Polygon} geometry.
-    // *
-    // * @return an empty polygon
-    // */
-    // public Polygon createPolygon() {
-    // return createPolygon(null, null);
-    // }
+    /**
+     * Constructs a <code>Polygon</code> with the given exterior boundary.
+     *
+     * @param shell
+     *            the outer boundary of the new <code>Polygon</code>, or
+     *            <code>null</code> or an empty <code>LinearRing</code> if
+     *            the empty geometry is to be created.
+     * @throws IllegalArgumentException if the boundary ring is invalid
+     */
+    pub fn create_polygon_with_linear_ring(shell: &LinearRing) -> Polygon {
+        return Polygon::new_with_linear_ring(shell);
+    }
 
     // /**
     // *  Build an appropriate <code>Geometry</code>, <code>MultiGeometry</code>, or
