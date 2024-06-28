@@ -2,12 +2,14 @@
 
 use super::{
     coordinate::Coordinate,
+    coordinate_array_sequences::CoordinateArraySequences,
     implementation::{
         coordinate_array_sequence::CoordinateArraySequence,
         coordinate_array_sequence_factory::CoordinateArraySequenceFactory,
     },
     line_string::LineString,
     linear_ring::LinearRing,
+    multi_point::MultiPoint,
     point::Point,
     polygon::Polygon,
     precision_model::PrecisionModel,
@@ -276,30 +278,30 @@ impl GeometryFactory {
     // return new MultiPoint(null, this);
     // }
 
-    // /**
-    // * Creates a {@link MultiPoint} using the given {@link Point}s.
-    // * A null or empty array will create an empty MultiPoint.
-    // *
-    // * @param point an array of Points (without null elements), or an empty array, or <code>null</code>
-    // * @return a MultiPoint object
-    // */
-    // public MultiPoint createMultiPoint(Point[] point) {
-    // return new MultiPoint(point, this);
-    // }
+    /**
+     * Creates a {@link MultiPoint} using the given {@link Point}s.
+     * A null or empty array will create an empty MultiPoint.
+     *
+     * @param point an array of Points (without null elements), or an empty array, or <code>null</code>
+     * @return a MultiPoint object
+     */
+    pub fn create_multi_point_from_points(point: &Vec<Point>) -> MultiPoint {
+        return MultiPoint::new_with_points(point);
+    }
 
-    // /**
-    // * Creates a {@link MultiPoint} using the given {@link Coordinate}s.
-    // * A null or empty array will create an empty MultiPoint.
-    // *
-    // * @param coordinates an array (without null elements), or an empty array, or <code>null</code>
-    // * @return a MultiPoint object
-    // * @deprecated Use {@link GeometryFactory#createMultiPointFromCoords} instead
-    // */
-    // public MultiPoint createMultiPoint(Coordinate[] coordinates) {
-    // return createMultiPoint(coordinates != null
-    //          ? getCoordinateSequenceFactory().create(coordinates)
-    //          : null);
-    // }
+    /**
+     * Creates a {@link MultiPoint} using the given {@link Coordinate}s.
+     * A null or empty array will create an empty MultiPoint.
+     *
+     * @param coordinates an array (without null elements), or an empty array, or <code>null</code>
+     * @return a MultiPoint object
+     * @deprecated Use {@link GeometryFactory#createMultiPointFromCoords} instead
+     */
+    pub fn create_multi_point_with_coordinates(coordinates: &Vec<Coordinate>) -> MultiPoint {
+        return GeometryFactory::create_multi_point_from_coordinate_array_sequence(
+            &CoordinateArraySequenceFactory::create_from_coordinates(&coordinates),
+        );
+    }
 
     // /**
     // * Creates a {@link MultiPoint} using the given {@link Coordinate}s.
@@ -314,27 +316,29 @@ impl GeometryFactory {
     //          : null);
     // }
 
-    // /**
-    // * Creates a {@link MultiPoint} using the
-    // * points in the given {@link CoordinateSequence}.
-    // * A <code>null</code> or empty CoordinateSequence creates an empty MultiPoint.
-    // *
-    // * @param coordinates a CoordinateSequence (possibly empty), or <code>null</code>
-    // * @return a MultiPoint geometry
-    // */
-    // public MultiPoint createMultiPoint(CoordinateSequence coordinates) {
-    // if (coordinates == null) {
-    // return createMultiPoint(new Point[0]);
-    // }
-    // Point[] points = new Point[coordinates.size()];
-    // for (int i = 0; i < coordinates.size(); i++) {
-    // CoordinateSequence ptSeq = getCoordinateSequenceFactory()
-    // .create(1, coordinates.getDimension(), coordinates.getMeasures());
-    // CoordinateSequences.copy(coordinates, i, ptSeq, 0, 1);
-    // points[i] = createPoint(ptSeq);
-    // }
-    // return createMultiPoint(points);
-    // }
+    /**
+     * Creates a {@link MultiPoint} using the
+     * points in the given {@link CoordinateSequence}.
+     * A <code>null</code> or empty CoordinateSequence creates an empty MultiPoint.
+     *
+     * @param coordinates a CoordinateSequence (possibly empty), or <code>null</code>
+     * @return a MultiPoint geometry
+     */
+    pub fn create_multi_point_from_coordinate_array_sequence(
+        coordinates: &CoordinateArraySequence,
+    ) -> MultiPoint {
+        let mut points: Vec<Point> = vec![Point::default(); coordinates.size()];
+        for i in 0..coordinates.size() {
+            let mut pt_seq = CoordinateArraySequenceFactory::create_with_size_dimension_measures(
+                1,
+                coordinates.get_dimension(),
+                coordinates.get_measures(),
+            );
+            CoordinateArraySequences::copy(coordinates, i, &mut pt_seq, 0, 1);
+            points[i] = GeometryFactory::create_point_from_coordinate_array_sequence(&pt_seq);
+        }
+        return GeometryFactory::create_multi_point_from_points(&points);
+    }
 
     /**
      * Constructs a <code>Polygon</code> with the given exterior boundary and

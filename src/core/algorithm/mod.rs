@@ -1,3 +1,4 @@
+pub(crate) mod angle;
 pub(crate) mod area;
 pub(crate) mod cg_algorithms_dd;
 pub(crate) mod distance;

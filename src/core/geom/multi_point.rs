@@ -1,5 +1,6 @@
 use super::{
-    coordinate::Coordinate, dimension::Dimension, envelope::Envelope, geometry::Geometry, point::Point, precision_model::PrecisionModel
+    coordinate::Coordinate, dimension::Dimension, envelope::Envelope, geometry::Geometry,
+    point::Point, precision_model::PrecisionModel,
 };
 
 /**
@@ -235,6 +236,28 @@ impl MultiPoint {
      */
     pub fn get_coordinate(&self, n: usize) -> Option<Coordinate> {
         return self.points[n].get_coordinate();
+    }
+
+    /**
+     * Collects all coordinates of all subgeometries into an Array.
+     *
+     * Note that while changes to the coordinate objects themselves
+     * may modify the Geometries in place, the returned Array as such
+     * is only a temporary container which is not synchronized back.
+     *
+     * @return the collected coordinates
+     *    */
+    pub fn get_coordinates(&self) -> Vec<Coordinate> {
+        let mut coordinates: Vec<Coordinate> = vec![Coordinate::default(); self.get_num_points()];
+        let mut k: i32 = -1;
+        for i in 0..self.points.len() {
+            let child_coordinates = self.points[i].get_coordinates();
+            for j in 0..child_coordinates.len() {
+                k += 1;
+                coordinates[k as usize] = child_coordinates[j];
+            }
+        }
+        return coordinates;
     }
 
     pub fn copy(&self) -> MultiPoint {
