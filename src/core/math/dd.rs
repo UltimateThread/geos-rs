@@ -924,10 +924,10 @@ impl DD {
      */
     pub fn determinant_xy_f64(x1: f64, y1: f64, x2: f64, y2: f64) -> DD {
         return DD::determinant_xy_dd(
-            DD::value_of_f64(x1),
-            DD::value_of_f64(y1),
-            DD::value_of_f64(x2),
-            DD::value_of_f64(y2),
+            &DD::value_of_f64(x1),
+            &DD::value_of_f64(y1),
+            &DD::value_of_f64(x2),
+            &DD::value_of_f64(y2),
         );
     }
 
@@ -940,7 +940,7 @@ impl DD {
      * @param y2 a matrix entry
      * @return the determinant of the matrix of values
      */
-    pub fn determinant_xy_dd(x1: DD, y1: DD, x2: DD, y2: DD) -> DD {
+    pub fn determinant_xy_dd(x1: &DD, y1: &DD, x2: &DD, y2: &DD) -> DD {
         let mut copy = x1.multiply_dd(&y2);
         copy.self_subtract_dd(&y1.multiply_dd(&x2));
         return copy;

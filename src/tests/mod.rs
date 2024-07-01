@@ -15,3 +15,5 @@ mod length_tests;
 mod ray_crossing_counter_tests;
 mod point_location_tests;
 mod intersection_tests;
+mod triangle_tests;
+mod triangle_cercumcentre_tests;
