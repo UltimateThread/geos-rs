@@ -1,18 +1,10 @@
 // use super::{coordinate::Coordinate, envelope::Envelope, implementation::{coordinate_array_sequence::CoordinateArraySequence, coordinate_array_sequence_factory::CoordinateArraySequenceFactory}, point::Point, precision_model::PrecisionModel};
 
 use super::{
-    coordinate::Coordinate,
-    coordinate_array_sequences::CoordinateArraySequences,
-    implementation::{
+    coordinate::Coordinate, coordinate_array_sequences::CoordinateArraySequences, implementation::{
         coordinate_array_sequence::CoordinateArraySequence,
         coordinate_array_sequence_factory::CoordinateArraySequenceFactory,
-    },
-    line_string::LineString,
-    linear_ring::LinearRing,
-    multi_point::MultiPoint,
-    point::Point,
-    polygon::Polygon,
-    precision_model::PrecisionModel,
+    }, line_string::LineString, linear_ring::LinearRing, multi_point::MultiPoint, multi_polygon::MultiPolygon, point::Point, polygon::Polygon, precision_model::PrecisionModel
 };
 
 #[derive(Clone, Copy)]
@@ -209,24 +201,24 @@ impl GeometryFactory {
     // *
     // * @return an empty MultiPolygon
     // */
-    // public MultiPolygon createMultiPolygon() {
+    // pub fn createMultiPolygon() -> MultiPolygon {
     // return new MultiPolygon(null, this);
     // }
 
-    // /**
-    // * Creates a MultiPolygon using the given Polygons; a null or empty array
-    // * will create an empty Polygon. The polygons must conform to the
-    // * assertions specified in the <A
-    // * HREF="http://www.opengis.org/techno/specs.htm">OpenGIS Simple Features
-    // * Specification for SQL</A>.
-    // *
-    // * @param polygons
-    // *            Polygons, each of which may be empty but not null
-    // * @return the created MultiPolygon
-    // */
-    // public MultiPolygon createMultiPolygon(Polygon[] polygons) {
-    // return new MultiPolygon(polygons, this);
-    // }
+    /**
+    * Creates a MultiPolygon using the given Polygons; a null or empty array
+    * will create an empty Polygon. The polygons must conform to the
+    * assertions specified in the <A
+    * HREF="http://www.opengis.org/techno/specs.htm">OpenGIS Simple Features
+    * Specification for SQL</A>.
+    *
+    * @param polygons
+    *            Polygons, each of which may be empty but not null
+    * @return the created MultiPolygon
+    */
+    pub fn create_multi_polygon(polygons: &Vec<Polygon>) -> MultiPolygon {
+        return MultiPolygon::new_with_polygons(polygons);
+    }
 
     /**
      * Constructs an empty {@link LinearRing} geometry.

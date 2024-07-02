@@ -1,9 +1,9 @@
-use crate::core::algorithm::{area::Area, orientation::Orientation};
+use crate::core::algorithm::{area::Area, centroid::Centroid, orientation::Orientation};
 
 use super::{
     coordinate::Coordinate, coordinate_array_sequences::CoordinateArraySequences,
     coordinate_sequence_comparator::CoordinateSequenceComparator, envelope::Envelope,
-    geometry::Geometry, geometry_factory::GeometryFactory, linear_ring::LinearRing,
+    geometry::Geometry, geometry_factory::GeometryFactory, linear_ring::LinearRing, point::Point,
     precision_model::PrecisionModel,
 };
 
@@ -498,5 +498,33 @@ impl Polygon {
             self.envelope = Some(self.compute_envelope_internal());
         }
         return Envelope::new_envelope(&self.envelope.unwrap());
+    }
+
+    /**
+     * Computes the centroid of this <code>Geometry</code>.
+     * The centroid
+     * is equal to the centroid of the set of component Geometries of highest
+     * dimension (since the lower-dimension geometries contribute zero
+     * "weight" to the centroid).
+     * <p>
+     * The centroid of an empty geometry is <code>POINT EMPTY</code>.
+     *
+     * @return a {@link Point} which is the centroid of this Geometry
+     */
+    pub fn get_centroid(&self) -> Point {
+        if self.is_empty() {
+            return Point::default();
+        }
+        if let Some(mut cent_pt) = Centroid::get_centroid_from_polygon(self) {
+            return self.create_point_from_internal_coord(&mut cent_pt);
+        }
+        return Point::default();
+    }
+
+    fn create_point_from_internal_coord(&self, coord: &mut Coordinate) -> Point {
+        if let Some(mut precision_model) = self.precision_model {
+            precision_model.make_precise_coordinate(coord);
+        }
+        return GeometryFactory::create_point_from_coordinate(coord);
     }
 }

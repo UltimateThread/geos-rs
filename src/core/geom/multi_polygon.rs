@@ -1,5 +1,9 @@
+use crate::core::algorithm::centroid::Centroid;
+
 use super::{
-    envelope::Envelope, geometry::Geometry, polygon::Polygon, precision_model::PrecisionModel,
+    coordinate::Coordinate, envelope::Envelope, geometry::Geometry,
+    geometry_factory::GeometryFactory, point::Point, polygon::Polygon,
+    precision_model::PrecisionModel,
 };
 
 /**
@@ -111,6 +115,64 @@ impl MultiPolygon {
     //     LineString[] allRingsArray = new LineString[allRings.size()];
     //     return getFactory().createMultiLineString((LineString[]) allRings.toArray(allRingsArray));
     //   }
+
+    /**
+     *  Returns the area of this <code>GeometryCollection</code>
+     *
+     * @return the area of the polygon
+     */
+    pub fn get_area(&self) -> f64 {
+        let mut area = 0.0;
+        for i in 0..self.polygons.len() {
+            area += self.polygons[i].get_area();
+        }
+        return area;
+    }
+
+    pub fn get_num_polygons(&self) -> usize {
+        return self.polygons.len();
+    }
+
+    pub fn get_polygon_at_index(&self, n: usize) -> Polygon {
+        return self.polygons[n].copy();
+    }
+
+    /**
+     * Computes the centroid of this <code>Geometry</code>.
+     * The centroid
+     * is equal to the centroid of the set of component Geometries of highest
+     * dimension (since the lower-dimension geometries contribute zero
+     * "weight" to the centroid).
+     * <p>
+     * The centroid of an empty geometry is <code>POINT EMPTY</code>.
+     *
+     * @return a {@link Point} which is the centroid of this Geometry
+     */
+    pub fn get_centroid(&self) -> Point {
+        if self.is_empty() {
+            return Point::default();
+        }
+        if let Some(mut cent_pt) = Centroid::get_centroid_from_multi_polygon(self) {
+            return self.create_point_from_internal_coord(&mut cent_pt);
+        }
+        return Point::default();
+    }
+
+    fn create_point_from_internal_coord(&self, coord: &mut Coordinate) -> Point {
+        if let Some(mut precision_model) = self.precision_model {
+            precision_model.make_precise_coordinate(coord);
+        }
+        return GeometryFactory::create_point_from_coordinate(coord);
+    }
+
+    pub fn is_empty(&self) -> bool {
+        for i in 0..self.polygons.len() {
+            if !self.polygons[i].is_empty() {
+                return false;
+            }
+        }
+        return true;
+    }
 
     pub fn equals_exact(&self, other: MultiPolygon, tolerance: f64) -> bool {
         if self.polygons.len() != other.polygons.len() {

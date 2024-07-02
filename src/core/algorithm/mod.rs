@@ -10,3 +10,4 @@ pub(crate) mod robust_line_intersector;
 pub(crate) mod hcoordinate;
 pub(crate) mod point_location;
 pub(crate) mod ray_crossing_counter;
+pub(crate) mod centroid;
