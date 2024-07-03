@@ -11,3 +11,4 @@ pub(crate) mod hcoordinate;
 pub(crate) mod point_location;
 pub(crate) mod ray_crossing_counter;
 pub(crate) mod centroid;
+pub(crate) mod cg_algorithms_3d;
