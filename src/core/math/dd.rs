@@ -93,7 +93,7 @@ impl DD {
     /**
      * The smallest representable relative difference between two {link @ DoubleDouble} values
      */
-    const EPS: f64 = 1.23259516440783e-32; /* = 2^-106 */
+    pub const EPS: f64 = 1.23259516440783e-32; /* = 2^-106 */
 
     /**
      * The value to split a double-precision value on during multiplication
