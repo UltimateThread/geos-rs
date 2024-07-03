@@ -106,7 +106,7 @@ mod envelope_tests {
 
     fn expand_to_include(a: &mut Envelope, b: &Envelope) -> Envelope {
         a.expand_to_include_envelope(b);
-        return a.clone();
+        return a.copy();
     }
 
     fn assert_envelope_equals(a: &Envelope, b: &Envelope) {
@@ -214,14 +214,14 @@ mod envelope_tests {
     #[test]
     fn test_copy() {
         let e1 = Envelope::new_xy(1., 2., 3., 4.);
-        let e2 = e1.clone();
+        let e2 = e1.copy();
         assert_eq!(1., e2.get_min_x());
         assert_eq!(2., e2.get_max_x());
         assert_eq!(3., e2.get_min_y());
         assert_eq!(4., e2.get_max_y());
 
         let e_null = Envelope::default();
-        let e_null_copy = e_null.clone();
+        let e_null_copy = e_null.copy();
         assert!(e_null_copy.is_null());
     }
 

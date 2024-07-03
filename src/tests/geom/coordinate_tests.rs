@@ -121,7 +121,7 @@ mod coordinate_tests {
     #[test]
     fn test_clone() {
         let c = Coordinate::new_xyz(100.0, 200.0, 50.0);
-        let clone = c.clone();
+        let clone = c;
         assert!(c.equals_3d(&clone));
     }
 
