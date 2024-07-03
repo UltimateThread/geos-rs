@@ -225,20 +225,6 @@ mod envelope_tests {
         assert!(e_null_copy.is_null());
     }
 
-    // #[test]
-    // fn test_geometry_factory_create_envelope() {
-    //     checkExpectedEnvelopeGeometry("POINT (0 0)");
-    //     checkExpectedEnvelopeGeometry("POINT (100 13)");
-    //     checkExpectedEnvelopeGeometry("LINESTRING (0 0, 0 10)");
-    //     checkExpectedEnvelopeGeometry("LINESTRING (0 0, 10 0)");
-
-    //     let poly10 = "POLYGON ((0 10, 10 10, 10 0, 0 0, 0 10))";
-    //     checkExpectedEnvelopeGeometry(poly10);
-
-    //     checkExpectedEnvelopeGeometry("LINESTRING (0 0, 10 10)", poly10);
-    //     checkExpectedEnvelopeGeometry("POLYGON ((5 10, 10 6, 5 0, 0 6, 5 10))", poly10);
-    // }
-
     #[test]
     fn test_metrics() {
         let env = Envelope::new_xy(0., 4., 0., 3.);
@@ -296,20 +282,6 @@ mod envelope_tests {
 
         assert_eq!(expected, a.intersects_coordinate_ab(&b1, &b2));
     }
-
-    // fn checkExpectedEnvelopeGeometry(wktInput: &str) {
-    //     checkExpectedEnvelopeGeometry(wktInput, wktInput);
-    // }
-
-    // fn checkExpectedEnvelopeGeometry(wktInput: &str, wktEnvGeomExpected: &str) {
-    //     Geometry input = reader.read(wktInput);
-    //     Geometry envGeomExpected = reader.read(wktEnvGeomExpected);
-
-    //     Envelope env = input.getEnvelopeInternal();
-    //     Geometry envGeomActual = geometryFactory.toGeometry(env);
-    //     boolean isEqual = envGeomActual.equalsNorm(envGeomExpected);
-    //     assertTrue(isEqual);
-    // }
 
     #[test]
     fn test_compare_to() {
